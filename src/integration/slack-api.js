@@ -1,4 +1,5 @@
 const https = require("https");
+const context = require("../context");
 
 const getOptions = (token, path) => {
   return {
@@ -16,6 +17,7 @@ const getOptions = (token, path) => {
 const post = (token, path, message) => {
   return new Promise((resolve, reject) => {
     const payload = JSON.stringify(message);
+    context.debugExtra("Post PAYLOAD", payload);
 
     const options = getOptions(token, path);
 
@@ -24,10 +26,12 @@ const post = (token, path, message) => {
 
       res.on("data", (chunk) => {
         chunks.push(chunk);
+        context.debugExtra("Post DATA", Buffer.concat(chunks).toString());
       });
 
       res.on("end", () => {
         const result = Buffer.concat(chunks).toString();
+        context.debugExtra("Post END", result);
         const response = JSON.parse(result);
 
         resolve({
