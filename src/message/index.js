@@ -17,9 +17,9 @@ const postMessage = async () => {
 
       const payload = buildMessage(channel, text, optional());
 
-      context.debug("Post Message PAYLOAD", payload);
+      context.debugExtra("Post Message PAYLOAD", payload);
       const result = await apiPostMessage(token, payload);
-      context.debug("Post Message RESULT", result);
+      context.debugExtra("Post Message RESULT", result);
 
       results.push(result);
     }
